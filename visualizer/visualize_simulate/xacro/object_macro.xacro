@@ -1,1 +1,88 @@
 <?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="link_macro" params="suffix parent joint width_parent length_parent height_parent width length height mass ixx ixy ixz iyy iyz izz color">
+        <xacro:if value="${joint=='revolute'}">
+            <joint name="${suffix}_joint" type="revolute">
+                <parent link="${parent}_link"/>
+                <child link="${suffix}"/>
+                <origin xyz="0 0 ${height_parent}" rpy="0 0 0"/>
+                <limit lower="-${PI/2}" upper="${PI/2}" effort="1" velocity="1"/>
+                <axis xyz="0 1 0"/>
+                <dynamics damping="0.0"/>
+            </joint>
+        </xacro:if>
+
+        <xacro:if value="${joint=='continuous'}">
+            <joint name="${suffix}_joint" type="continuous">
+                <parent link="${parent}_link"/>
+                <child link="${suffix}"/>
+                <origin xyz="0 0 ${height_parent}" rpy="0 0 0"/>
+                <limit effort="0" velocity="1"/>
+                <axis xyz="0 1 0"/>
+                <dynamics damping="0.0"/>
+            </joint>
+        </xacro:if>
+
+
+        <link name="${suffix}">
+            <visual>
+                <geometry>
+                    <box size="${width} ${length} ${height}"/>
+                </geometry>
+                <origin xyz="0 0 ${height/2}" rpy="0 0 0"/>
+                <material name="${color}"/>
+            </visual>
+
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="${mass}"/>
+                <inertia
+                    ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                    iyy="${iyy}" iyz="${iyz}"
+                    izz="${izz}"/>
+            </inertial>
+
+            <collision>
+                <geometry>
+                    <box size="${width} ${length} ${height}"/>
+                </geometry>
+                <origin xyz="0 0 ${height/2}" rpy="0 0 0"/>
+            </collision>
+        </link>
+        <gazebo>
+            <material>Gazebo/Red</material>
+        </gazebo>
+
+        <joint name="${suffix}_fixed" type="fixed">
+            <parent link="${suffix}"/>
+            <child link="${suffix}_link"/>
+        </joint>
+
+        <link name="${suffix}_link">
+            <visual>
+                <geometry>
+                    <cylinder radius="${width/2}" length="${length}"/>
+                </geometry>
+                <origin xyz="0 0 ${height}" rpy="${PI/2} 0 0"/>
+                <material name="${color}"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <cylinder radius="${width/2}" length="${length}"/>
+                </geometry>
+                <origin xyz="0 0 ${height}" rpy="${PI/2} 0 0"/>
+            </collision>
+            <inertial>
+                <mass value="0"/>
+                <inertia 
+                    ixx="0" ixy="0" ixz="0"
+                    iyy="0" iyz="0"
+                    izz="0"/>
+            </inertial>
+        </link>
+        <gazebo>
+            <material>Gazebo/Red</material>
+        </gazebo>
+    </xacro:macro>
+</robot>
