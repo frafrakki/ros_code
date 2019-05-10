@@ -5,9 +5,9 @@
     <xacro:include filename="$(find visualize_simulate)/xacro/common_params.xacro"/>
     <xacro:include filename="$(find visualize_simulate)/xacro/object_macro.xacro"/>
 
-    <link name="base_link"/>
+    <link name="world"/>
     <joint name="base_joint" type="fixed">
-        <parent link="base_link"/>
+        <parent link="world"/>
         <child link="bar_link"/>
         <origin xyz="0 0 3" rpy="0 ${PI} 0"/>
     </joint>
