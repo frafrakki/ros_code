@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <xacro:macro name="link_macro" params="suffix parent joint width_parent length_parent height_parent width length height mass ixx ixy ixz iyy iyz izz color">
+    <xacro:macro name="link_macro" params="suffix parent joint x_offset y_offset z_offset width length height mass ixx ixy ixz iyy iyz izz color">
         <xacro:if value="${joint=='revolute'}">
             <joint name="${suffix}_joint" type="revolute">
                 <parent link="${parent}_link"/>
                 <child link="${suffix}"/>
-                <origin xyz="0 0 ${height_parent}" rpy="0 0 0"/>
+                <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
                 <limit lower="-${PI/2}" upper="${PI/2}" effort="1" velocity="1"/>
                 <axis xyz="0 1 0"/>
                 <dynamics damping="0.0"/>
@@ -17,7 +17,7 @@
             <joint name="${suffix}_joint" type="continuous">
                 <parent link="${parent}_link"/>
                 <child link="${suffix}"/>
-                <origin xyz="0 0 ${height_parent}" rpy="0 0 0"/>
+                <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
                 <limit effort="0" velocity="1"/>
                 <axis xyz="0 1 0"/>
                 <dynamics damping="0.0"/>
@@ -50,7 +50,7 @@
                 <origin xyz="0 0 ${height/2}" rpy="0 0 0"/>
             </collision>
         </link>
-        <gazebo>
+        <gazebo reference="${suffix}">
             <material>Gazebo/Red</material>
         </gazebo>
 
@@ -81,7 +81,7 @@
                     izz="0"/>
             </inertial>
         </link>
-        <gazebo>
+        <gazebo reference="${suffix}_link">
             <material>Gazebo/Red</material>
         </gazebo>
     </xacro:macro>

@@ -32,17 +32,22 @@
       <geometry>
         <cylinder length="1.0" radius="0.05"/>
       </geometry>
-      <origin rpy="1.57 0 0" xyz="0 0 3.0"/>
+      <origin rpy="1.57 0 0" xyz="0 0 0.05"/>
     </collision>
+    <inertial>
+      <mass value="0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+      <origin rpy="1.57 0 0" xyz="0 0 0.05"/>
+    </inertial>
   </link>
-  <gazebo>
+  <gazebo reference="bar_link">
     <material>Gazebo/Orange</material>
   </gazebo>
-  <joint name="1st_joint" type="revolute">
+  <joint name="1st_joint" type="continuous">
     <parent link="bar_link"/>
     <child link="1st"/>
     <origin rpy="0 0 0" xyz="0 0 0.05"/>
-    <limit effort="0" lower="-1.57" upper="1.57" velocity="0"/>
+    <limit effort="0" velocity="1"/>
     <axis xyz="0 1 0"/>
     <dynamics damping="0.0"/>
   </joint>
@@ -66,7 +71,7 @@
       <origin rpy="0 0 0" xyz="0 0 0.5"/>
     </collision>
   </link>
-  <gazebo>
+  <gazebo reference="1st">
     <material>Gazebo/Red</material>
   </gazebo>
   <joint name="1st_fixed" type="fixed">
@@ -92,14 +97,14 @@
       <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
     </inertial>
   </link>
-  <gazebo>
+  <gazebo reference="1st_link">
     <material>Gazebo/Red</material>
   </gazebo>
   <joint name="2nd_joint" type="revolute">
     <parent link="1st_link"/>
     <child link="2nd"/>
     <origin rpy="0 0 0" xyz="0 0 1.0"/>
-    <limit effort="0" lower="-1.57" upper="1.57" velocity="0"/>
+    <limit effort="1" lower="-1.57" upper="1.57" velocity="1"/>
     <axis xyz="0 1 0"/>
     <dynamics damping="0.0"/>
   </joint>
@@ -123,7 +128,7 @@
       <origin rpy="0 0 0" xyz="0 0 0.5"/>
     </collision>
   </link>
-  <gazebo>
+  <gazebo reference="2nd">
     <material>Gazebo/Red</material>
   </gazebo>
   <joint name="2nd_fixed" type="fixed">
@@ -149,14 +154,14 @@
       <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
     </inertial>
   </link>
-  <gazebo>
+  <gazebo reference="2nd_link">
     <material>Gazebo/Red</material>
   </gazebo>
   <joint name="3rd_joint" type="revolute">
     <parent link="2nd_link"/>
     <child link="3rd"/>
     <origin rpy="0 0 0" xyz="0 0 1.0"/>
-    <limit effort="0" lower="-1.57" upper="1.57" velocity="0"/>
+    <limit effort="1" lower="-1.57" upper="1.57" velocity="1"/>
     <axis xyz="0 1 0"/>
     <dynamics damping="0.0"/>
   </joint>
@@ -180,7 +185,7 @@
       <origin rpy="0 0 0" xyz="0 0 0.5"/>
     </collision>
   </link>
-  <gazebo>
+  <gazebo reference="3rd">
     <material>Gazebo/Red</material>
   </gazebo>
   <joint name="3rd_fixed" type="fixed">
@@ -206,8 +211,13 @@
       <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
     </inertial>
   </link>
-  <gazebo>
+  <gazebo reference="3rd_link">
     <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo>
+    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
+      <robotNamespace>/gymnast_robot</robotNamespace>
+    </plugin>
   </gazebo>
 </robot>
 

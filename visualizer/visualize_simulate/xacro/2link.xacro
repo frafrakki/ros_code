@@ -24,29 +24,46 @@
             <geometry>
                 <cylinder radius="0.05" length="1.0"/>
             </geometry>
-            <origin xyz="0 0 3.0" rpy="${PI/2} 0 0"/>
+            <origin xyz="0 0 0.05" rpy="${PI/2} 0 0"/>
         </collision>
+        <inertial>
+            <mass value="0"/>
+            <inertia
+                ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+            <origin xyz="0 0 0.05" rpy="${PI/2} 0 0"/>
+        </inertial>
     </link>
-    <gazebo>
+    <gazebo reference="bar_link">
         <material>Gazebo/Orange</material>
     </gazebo>
 
     <xacro:link_macro
         suffix="1st" parent="bar" joint="continuous"
-        width_parent="0" length_parent="0" height_parent="0.05"
-        width="0.1" length="0.3" height="1.0"
-        mass="0.5" ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"
+        x_offset="0" y_offset="0" z_offset="0.05"
+        width="0.1" length="0.3" height="1.0" mass="0.5"
+        ixx="0.01" ixy="0" ixz="0"
+        iyy="0.01" iyz="0"
+        izz="0.01"
         color="red" />
     <xacro:link_macro
         suffix="2nd" parent="1st" joint="revolute"
-        width_parent="0" length_parent="0" height_parent="1.0"
-        width="0.1" length="0.3" height="1.0"
-        mass="0.5" ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"
-        color="green"/>
+        x_offset="0" y_offset="0" z_offset="1.0"
+        width="0.1" length="0.3" height="1.0" mass="0.5"
+        ixx="0.01" ixy="0" ixz="0"
+        iyy="0.01" iyz="0"
+        izz="0.01"
+        color="green" />
     <xacro:link_macro suffix="3rd" parent="2nd" joint="revolute"
-        width_parent="0" length_parent="0" height_parent="1.0"
-        width="0.1" length="0.3" height="1.0"
-        mass="0.5" ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"
-        color="blue"/>
+        x_offset="0" y_offset="0" z_offset="1.0"
+        width="0.1" length="0.3" height="1.0" mass="0.5"
+        ixx="0.01" ixy="0" ixz="0"
+        iyy="0.01" iyz="0"
+        izz="0.01"
+        color="blue" />
 
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/gymnast_robot</robotNamespace>
+        </plugin>
+    </gazebo>
 </robot>
