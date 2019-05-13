@@ -14,9 +14,9 @@
   <material name="blue">
     <color rgba="0 0 1 1"/>
   </material>
-  <link name="base_link"/>
+  <link name="world"/>
   <joint name="base_joint" type="fixed">
-    <parent link="base_link"/>
+    <parent link="world"/>
     <child link="bar_link"/>
     <origin rpy="0 3.14 0" xyz="0 0 3"/>
   </joint>
