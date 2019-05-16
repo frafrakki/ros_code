@@ -9,7 +9,7 @@
                 <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
                 <limit lower="-${PI/2}" upper="${PI/2}" effort="1" velocity="1"/>
                 <axis xyz="0 1 0"/>
-                <dynamics damping="0.0"/>
+                <dynamics damping="0.1"/>
             </joint>
         </xacro:if>
 
@@ -20,7 +20,7 @@
                 <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
                 <limit effort="0" velocity="1"/>
                 <axis xyz="0 1 0"/>
-                <dynamics damping="0.0"/>
+                <dynamics damping="0.1"/>
             </joint>
         </xacro:if>
 
@@ -75,6 +75,7 @@
             </collision>
             <inertial>
                 <mass value="0"/>
+                <origin xyz="0 0 ${height}" rpy="${PI/2} 0 0"/>
                 <inertia 
                     ixx="0" ixy="0" ixz="0"
                     iyy="0" iyz="0"
