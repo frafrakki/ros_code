@@ -9,8 +9,16 @@
                 <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
                 <limit lower="-${PI/2}" upper="${PI/2}" effort="1" velocity="1"/>
                 <axis xyz="0 1 0"/>
-                <dynamics damping="0.1"/>
+                <dynamics damping="0.0"/>
             </joint>
+            <transmission name="${suffix}_transmission">
+                <type>transmission_interface/SimpleTransmission</type>
+                <joint name="${suffix}_joint"/>
+                <actuator name="${suffix}_motor">
+                    <hardwareInterface>EffortJointInterface</hardwareInterface>
+                    <mechanicalReduction>1</mechanicalReduction>
+                </actuator>
+            </transmission>
         </xacro:if>
 
         <xacro:if value="${joint=='continuous'}">
@@ -20,7 +28,7 @@
                 <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
                 <limit effort="0" velocity="1"/>
                 <axis xyz="0 1 0"/>
-                <dynamics damping="0.1"/>
+                <dynamics damping="0.0"/>
             </joint>
         </xacro:if>
 
@@ -52,6 +60,7 @@
         </link>
         <gazebo reference="${suffix}">
             <material>Gazebo/${color}</material>
+            <selfCollide>true</selfCollide>
         </gazebo>
 
         <joint name="${suffix}_fixed" type="fixed">
@@ -84,6 +93,7 @@
         </link>
         <gazebo reference="${suffix}_link">
             <material>Gazebo/${color}</material>
+            <selfCollide>true</selfCollide>
         </gazebo>
     </xacro:macro>
 </robot>
