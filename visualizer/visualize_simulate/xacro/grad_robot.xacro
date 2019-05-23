@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<robot name="gymnast_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find visualize_simulate)/xacro/common_params.xacro"/>
+    <xacro:include filename="$(find visualize_simulate)/xacro/object_macro.xacro"/>
+
+    <link name="world"/>
+
+    <joint name="world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0 -0.5 0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 3"/>
+            </geometry>
+            <origin xyz="0 0 1.5" rpy="0 0 0"/>
+            <material name="Blue"/>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 1.5" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <box size="0.1 0.1 3"/>
+            </geometry>
+            <origin xyz="0 0 1.5" rpy="0 0 0"/>
+        </collision>
+    </link>
+    <gazebo reference="base_link">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <joint name="system_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="bar_link"/>
+        <origin xyz="0 0.5 3" rpy="0 0 0"/>
+    </joint>
+
+    <link name="bar_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="1.0"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+            <material name="Orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.05" length="1.0"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+        </collision>
+        <inertial>
+            <mass value="1"/>
+            <inertia
+                ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+            <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+        </inertial>
+    </link>
+    <gazebo reference="bar_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+    <xacro:link_macro
+        suffix="1st" parent="bar" joint="continuous"
+        x_offset="0" y_offset="0" z_offset="0"
+        width="0.05" length="0.15" height="0.323"
+        mass="0.710" com_x="0" com_y="0" com_z="0.232"
+        ixx="0.01" ixy="0" ixz="0"
+        iyy="0.01" iyz="0"
+        izz="0.0058"
+        color="Red"/>
+    <xacro:link_macro
+        suffix="2nd" parent="1st" joint="revolute"
+        x_offset="0" y_offset="0" z_offset="0.373"
+        width="0.05" length="0.15" height="0.265"
+        mass="0.351" com_x="0" com_y="0" com_z="0.121"
+        ixx="0.01" ixy="0" ixz="0"
+        iyy="0.01" iyz="0"
+        izz="0.070"
+        color="Green"/>
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/gymnast_robot</robotNamespace>
+        </plugin>
+    </gazebo>
+</robot>

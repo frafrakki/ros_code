@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <xacro:macro name="link_macro" params="suffix parent joint x_offset y_offset z_offset width length height mass ixx ixy ixz iyy iyz izz color">
+    <xacro:macro name="link_macro" params="suffix parent joint x_offset y_offset z_offset width length height mass com_x com_y com_z ixx ixy ixz iyy iyz izz color">
         <xacro:if value="${joint=='revolute'}">
             <joint name="${suffix}_joint" type="revolute">
                 <parent link="${parent}_link"/>
-                <child link="${suffix}"/>
+                <child link="${suffix}_link"/>
                 <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
                 <limit lower="-${PI/2}" upper="${PI/2}" effort="1" velocity="1"/>
                 <axis xyz="0 1 0"/>
@@ -17,8 +17,8 @@
                     <hardwareInterface>EffortJointInterface</hardwareInterface>
                 </joint>
                     <actuator name="${suffix}_motor">
-                    <hardwareInterface>EffortJointInterface</hardwareInterface>
-                    <mechanicalReduction>1</mechanicalReduction>
+                        <hardwareInterface>EffortJointInterface</hardwareInterface>
+                        <mechanicalReduction>1</mechanicalReduction>
                     </actuator>
             </transmission>
         </xacro:if>
@@ -26,7 +26,7 @@
         <xacro:if value="${joint=='continuous'}">
             <joint name="${suffix}_joint" type="continuous">
                 <parent link="${parent}_link"/>
-                <child link="${suffix}"/>
+                <child link="${suffix}_link"/>
                 <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
                 <limit effort="0" velocity="1"/>
                 <axis xyz="0 1 0"/>
@@ -35,7 +35,7 @@
         </xacro:if>
 
 
-        <link name="${suffix}">
+        <link name="${suffix}_link">
             <visual>
                 <geometry>
                     <box size="${width} ${length} ${height}"/>
@@ -45,7 +45,7 @@
             </visual>
 
             <inertial>
-                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <origin xyz="${com_x} ${com_y} ${com_z}" rpy="0 0 0"/>
                 <mass value="${mass}"/>
                 <inertia
                     ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
@@ -60,42 +60,10 @@
                 <origin xyz="0 0 ${height/2}" rpy="0 0 0"/>
             </collision>
         </link>
-        <gazebo reference="${suffix}">
-            <material>Gazebo/${color}</material>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <joint name="${suffix}_fixed" type="fixed">
-            <parent link="${suffix}"/>
-            <child link="${suffix}_link"/>
-        </joint>
-
-        <link name="${suffix}_link">
-            <visual>
-                <geometry>
-                    <cylinder radius="${width/2}" length="${length}"/>
-                </geometry>
-                <origin xyz="0 0 ${height}" rpy="${PI/2} 0 0"/>
-                <material name="${color}"/>
-            </visual>
-            <collision>
-                <geometry>
-                    <cylinder radius="${width/2}" length="${length}"/>
-                </geometry>
-                <origin xyz="0 0 ${height}" rpy="${PI/2} 0 0"/>
-            </collision>
-            <inertial>
-                <mass value="0.001"/>
-                <origin xyz="0 0 ${height}" rpy="${PI/2} 0 0"/>
-                <inertia 
-                    ixx="0.001" ixy="0" ixz="0"
-                    iyy="0.001" iyz="0"
-                    izz="0.001"/>
-            </inertial>
-        </link>
         <gazebo reference="${suffix}_link">
             <material>Gazebo/${color}</material>
             <selfCollide>true</selfCollide>
         </gazebo>
+
     </xacro:macro>
 </robot>
