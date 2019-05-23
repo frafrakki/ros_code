@@ -13,11 +13,13 @@
             </joint>
             <transmission name="${suffix}_transmission">
                 <type>transmission_interface/SimpleTransmission</type>
-                <joint name="${suffix}_joint"/>
-                <actuator name="${suffix}_motor">
+                <joint name="${suffix}_joint">
+                    <hardwareInterface>EffortJointInterface</hardwareInterface>
+                </joint>
+                    <actuator name="${suffix}_motor">
                     <hardwareInterface>EffortJointInterface</hardwareInterface>
                     <mechanicalReduction>1</mechanicalReduction>
-                </actuator>
+                    </actuator>
             </transmission>
         </xacro:if>
 
