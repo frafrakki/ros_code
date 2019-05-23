@@ -46,7 +46,7 @@
     <link name="bar_link">
         <visual>
             <geometry>
-                <cylinder radius="0.05" length="1.0"/>
+                <cylinder radius="0.025" length="1.0"/>
             </geometry>
             <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
             <material name="Orange"/>
@@ -79,7 +79,7 @@
         color="Red"/>
     <xacro:link_macro
         suffix="2nd" parent="1st" joint="revolute"
-        x_offset="0" y_offset="0" z_offset="0.373"
+        x_offset="0" y_offset="0" z_offset="0.323"
         width="0.05" length="0.15" height="0.265"
         mass="0.351" com_x="0" com_y="0" com_z="0.121"
         ixx="0.01" ixy="0" ixz="0"
