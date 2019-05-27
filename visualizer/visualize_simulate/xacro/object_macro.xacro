@@ -14,7 +14,7 @@
             <transmission name="${suffix}_transmission">
                 <type>transmission_interface/SimpleTransmission</type>
                 <joint name="${suffix}_joint">
-                    <hardwareInterface>EffortJointInterface</hardwareInterface>
+                    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
                 </joint>
                     <actuator name="${suffix}_motor">
                         <hardwareInterface>EffortJointInterface</hardwareInterface>
