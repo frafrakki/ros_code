@@ -20,7 +20,11 @@
                         <hardwareInterface>EffortJointInterface</hardwareInterface>
                         <mechanicalReduction>1</mechanicalReduction>
                     </actuator>
-            </transmission>
+                </transmission>
+                <gazebo reference="${suffix}_joint">
+                    <provideFeedback>true</provideFeedback>
+                    <turnGravityOff>false</turnGravityOff>
+                </gazebo>
         </xacro:if>
 
         <xacro:if value="${joint=='continuous'}">
@@ -63,6 +67,15 @@
         <gazebo reference="${suffix}_link">
             <material>Gazebo/${color}</material>
             <selfCollide>true</selfCollide>
+        </gazebo>
+
+         <gazebo>
+            <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+                <updateRate>100.0</updateRate>
+                <topicName>${suffix}_sensor/raw</topicName>
+                <jointName>${suffix}_joint</jointName>
+                <gaussianNoise>0.0</gaussianNoise>
+            </plugin>
         </gazebo>
 
     </xacro:macro>
