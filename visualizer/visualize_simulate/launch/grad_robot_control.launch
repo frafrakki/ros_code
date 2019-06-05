@@ -14,6 +14,6 @@
          output="screen" ns="/gymnast_robot" args="2nd_joint_position_controller"/>
 
      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" ns="/gymnastic_robot">
-         <remap from="/joint_states" to="/gymnast_robot/joint_states"/>
+         <remap from="/joint_states" to="/gymnastic_robot/joint_states"/>
      </node>
 </launch>

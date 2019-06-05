@@ -69,7 +69,7 @@
             <selfCollide>true</selfCollide>
         </gazebo>
 
-         <gazebo>
+        <gazebo>
             <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
                 <updateRate>100.0</updateRate>
                 <topicName>${suffix}_sensor/raw</topicName>
