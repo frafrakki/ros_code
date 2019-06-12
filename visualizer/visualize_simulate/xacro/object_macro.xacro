@@ -7,7 +7,7 @@
                 <parent link="${parent}_link"/>
                 <child link="${suffix}_link"/>
                 <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
-                <limit lower="-${PI/2}" upper="${PI/2}" effort="1" velocity="1"/>
+                <limit lower="-${PI/2}" upper="${PI/2}" effort="1" velocity="100"/>
                 <axis xyz="0 1 0"/>
                 <dynamics damping="0.0"/>
             </joint>
@@ -18,7 +18,7 @@
                 </joint>
                     <actuator name="${suffix}_motor">
                         <hardwareInterface>EffortJointInterface</hardwareInterface>
-                        <mechanicalReduction>1</mechanicalReduction>
+                        <mechanismReduction>1</mechanismReduction>
                     </actuator>
                 </transmission>
                 <gazebo reference="${suffix}_joint">
@@ -32,10 +32,14 @@
                 <parent link="${parent}_link"/>
                 <child link="${suffix}_link"/>
                 <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="${PI} 0 0"/>
-                <limit effort="0" velocity="1"/>
+                <limit effort="0" velocity="100"/>
                 <axis xyz="0 1 0"/>
                 <dynamics damping="0.0"/>
             </joint>
+            <gazebo reference="${suffix}_joint">
+                <provideFeedback>true</provideFeedback>
+                <turnGravityOff>false</turnGravityOff>
+            </gazebo>
         </xacro:if>
 
 
@@ -69,14 +73,7 @@
             <selfCollide>true</selfCollide>
         </gazebo>
 
-        <gazebo>
-            <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
-                <updateRate>100.0</updateRate>
-                <topicName>${suffix}_sensor/raw</topicName>
-                <jointName>${suffix}_joint</jointName>
-                <gaussianNoise>0.0</gaussianNoise>
-            </plugin>
-        </gazebo>
+
 
     </xacro:macro>
 </robot>

@@ -71,7 +71,7 @@
     <xacro:link_macro
         suffix="1st" parent="bar" joint="continuous"
         x_offset="0" y_offset="0" z_offset="0"
-        width="0.05" length="0.15" height="0.323"
+        width="0.05" length="0.05" height="${0.323+0.015}"
         mass="0.710" com_x="0" com_y="0" com_z="0.232"
         ixx="0.01" ixy="0" ixz="0"
         iyy="0.01" iyz="0"
@@ -79,8 +79,8 @@
         color="Red"/>
     <xacro:link_macro
         suffix="2nd" parent="1st" joint="revolute"
-        x_offset="0" y_offset="0" z_offset="0.323"
-        width="0.05" length="0.15" height="0.265"
+        x_offset="0" y_offset="0.05" z_offset="${0.323+0.0015}"
+        width="0.05" length="0.05" height="0.265"
         mass="0.351" com_x="0" com_y="0" com_z="0.121"
         ixx="0.01" ixy="0" ixz="0"
         iyy="0.01" iyz="0"
@@ -88,6 +88,18 @@
         color="Green"/>
 
     <gazebo>
+        <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+            <updateRate>100.0</updateRate>
+            <topicName>1st_sensor/raw</topicName>
+            <jointName>1st_joint</jointName>
+            <gaussianNoise>0.0</gaussianNoise>
+        </plugin>
+        <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+            <updateRate>100.0</updateRate>
+            <topicName>2nd_sensor/raw</topicName>
+            <jointName>2nd_joint</jointName>
+            <gaussianNoise>0.0</gaussianNoise>
+        </plugin>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
             <robotNamespace>/gymnast_robot</robotNamespace>
         </plugin>
