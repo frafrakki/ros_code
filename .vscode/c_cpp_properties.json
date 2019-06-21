@@ -1,0 +1,37 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/irl/catkin_ws/devel/include",
+        "/opt/ros/kinetic/include",
+        "/home/irl/catkin_ws/src/DynamixelSDK/ros/include",
+        "/home/irl/catkin_ws/src/dynamixel-workbench/dynamixel_workbench_controllers/include",
+        "/home/irl/catkin_ws/src/dynamixel-workbench/dynamixel_workbench_operators/include",
+        "/home/irl/catkin_ws/src/dynamixel-workbench/dynamixel_workbench_single_manager_gui/include",
+        "/home/irl/catkin_ws/src/dynamixel-workbench/dynamixel_workbench_toolbox/include",
+        "/home/irl/catkin_ws/src/imu_receive/imu_receive/include",
+        "/home/irl/catkin_ws/src/joypad_script/joypad_prog/include",
+        "/home/irl/catkin_ws/src/open_manipulator/open_manipulator_control_gui/include",
+        "/home/irl/catkin_ws/src/open_manipulator/open_manipulator_controller/include",
+        "/home/irl/catkin_ws/src/open_manipulator/open_manipulator_libs/include",
+        "/home/irl/catkin_ws/src/open_manipulator/open_manipulator_moveit/include",
+        "/home/irl/catkin_ws/src/open_manipulator/open_manipulator_teleop/include",
+        "/home/irl/catkin_ws/src/controller/robot_controller/include",
+        "/home/irl/catkin_ws/src/robotis_manipulator/include",
+        "/home/irl/catkin_ws/src/ros_hardware/ros_hard_lecture/include",
+        "/home/irl/catkin_ws/src/ros_chat/ros_study/include",
+        "/home/irl/catkin_ws/src/ros_chat/ros_study_py/include",
+        "/home/irl/catkin_ws/src/visualizer/simulate_robot/include",
+        "/home/irl/catkin_ws/src/turtlebot3/turtlebot3_slam/include",
+        "/home/irl/catkin_ws/src/visualizer/visualize_simulate/include",
+        "/home/irl/catkin_ws/src/dynamixel-workbench/dynamixel_workbench_single_manager/include",
+        "/usr/include"
+      ],
+      "name": "Linux"
+    }
+  ]
+}

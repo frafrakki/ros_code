@@ -1,4 +1,9 @@
 gymnast_robot:
+
+    #joint state
+    joint_state_controller:
+        type: joint_state_controller/JointStateController
+        publish_rate: 50
     
     # Position controller
     2nd_joint_position_controller:

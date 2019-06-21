@@ -1,11 +1,25 @@
 <?xml version="1.0"?>
 
 <launch>
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+
     <arg name="model" default="$(find visualize_simulate)/xacro/grad_robot.xacro"/>
     <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
     <rosparam file="$(find robot_controller)/config/grad_robot_controller_config.yaml" command="load"/>
-    
-    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+    <rosparam command="load" file="$(find joint_state_controller)/joint_state_controller.yaml"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find rrbot_gazebo)/worlds/rrbot.world"/>
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="headless" value="$(arg headless)"/>  
+    </include>
 
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
         args="-urdf -model gymnast_robot -param robot_description"/>
@@ -16,4 +30,7 @@
      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" ns="/gymnast_robot">
          <remap from="/joint_states" to="/gymnast_robot/joint_states"/>
      </node>
+
+    <node name="joint_state_controller_spawner" pkg="controller_manager" 
+            type="spawner" output="screen" args="joint_state_controller"/>
 </launch>
