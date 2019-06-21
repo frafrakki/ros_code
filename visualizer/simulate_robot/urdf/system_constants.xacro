@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <!-- Robot constants parameter -->
-    <!-- Y up,X front -->
-    <!-- Link 1 -->
-    <xacro:property name="mass1" value="0.710"/>
-    <xacro:property name="length1" value="0.05"/>
-    <xacro:property name="width1" value="0.05"/>
-    <xacro:property name="height1" value="${0.323+0.015}"/> <!-- length + joint -->
-    <xacro:property name="comx1" value="0.0"/>
-    <xacro:property name="comy1" value="0.0"/>
-    <xacro:property name="comz1" value="0.232"/>
-    <!-- Link 2 -->
-    <xacro:property name="mass2" value="0.351"/>
-    <xacro:property name="length2" value="0.05"/>
-    <xacro:property name="width2" value="0.05"/>
-    <xacro:property name="height2" value="0.265"/>
-    <xacro:property name="comx2" value="0.0"/>
-    <xacro:property name="comy2" value="0.0"/>
-    <xacro:property name="comz2" value="0.265"/>
-    <!-- World constants parameter -->
-    <xacro:property name="PI" value="3.1415926535897931"/>
+  <!-- Robot constants parameter -->
+  <!-- Y up,X front -->
+  <!-- Link 1 -->
+  <xacro:property name="mass1" value="0.710"/>
+  <xacro:property name="length1" value="0.05"/>
+  <xacro:property name="width1" value="0.05"/>
+  <xacro:property name="height1" value="${0.323+0.015}"/> <!-- length + joint -->
+  <xacro:property name="comx1" value="0.0"/>
+  <xacro:property name="comy1" value="0.0"/>
+  <xacro:property name="comz1" value="0.232"/>
+  <!-- Link 2 -->
+  <xacro:property name="mass2" value="0.351"/>
+  <xacro:property name="length2" value="0.05"/>
+  <xacro:property name="width2" value="0.05"/>
+  <xacro:property name="height2" value="0.265"/>
+  <xacro:property name="comx2" value="0.0"/>
+  <xacro:property name="comy2" value="0.0"/>
+  <xacro:property name="comz2" value="0.265"/>
+  <!-- World constants parameter -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
 </robot>

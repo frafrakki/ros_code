@@ -50,5 +50,12 @@
         ixx="0.01" ixy="0" ixz="0" 
         iyy="0.01" iyz="0" 
         izz="0.0058"/>
-
+    <!-- 2nd_link -->
+    <xacro:link_macro 
+        suffix="2nd_link" parent="1st_link" type="revolute" color="green" 
+        width="${width2}" length="${length2}" height="${height2}" x_offset="0" y_offset="${width2}" z_offset="${height1}" 
+        mass="${mass1}" comx="${comx2}" comy="${comy2}" comz="${comz2}"
+        ixx="0.01" ixy="0" ixz="0" 
+        iyy="0.01" iyz="0" 
+        izz="0.070"/>
 </robot>

@@ -1,71 +1,71 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="link_macro" 
-        params="suffix parent type color 
-        width length height x_offset y_offset z_offset 
-        mass comx comy comz
-        ixx ixy ixz 
-        iyy iyz 
-        izz">
-        <!-- revolute joint(actuated) -->
-        <xacro:if value="${type=='revolute'}">
-            <joint name="${suffix}_joint" type="revolute">
-                <parent link="${parent}"/>
-                <child link="${suffix}"/>
-                <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
-                <limit upper="${PI/2}" lower="${PI/2}" effort="100" velocity="100"/>
-                <axis xyz="0 1 0"/>
-                <dynamics damping="0.1"/>
-            </joint>
-        </xacro:if>
-        <!-- continuous joint(passive) -->
-        <xacro:if value="${type=='continuous'}">
-            <joint name="${suffix}_joint" type="continuous">
-                <parent link="${parent}"/>
-                <child link="${suffix}"/>
-                <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
-                <limit effort="100" velocity="100"/>
-                <axis xyz="0 1 0"/>
-                <dynamics damping="0.00001"/>
-            </joint>
-        </xacro:if>
+  <xacro:macro name="link_macro" 
+    params="suffix parent type color 
+    width length height x_offset y_offset z_offset 
+    mass comx comy comz
+    ixx ixy ixz 
+    iyy iyz 
+    izz">
+    <!-- revolute joint(actuated) -->
+    <xacro:if value="${type=='revolute'}">
+      <joint name="${suffix}_joint" type="revolute">
+        <parent link="${parent}"/>
+        <child link="${suffix}"/>
+        <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
+        <limit upper="${PI/2}" lower="${-PI/2}" effort="100" velocity="100"/>
+          <axis xyz="0 1 0"/>
+          <dynamics damping="0.1"/>
+      </joint>
+    </xacro:if>
+    <!-- continuous joint(passive) -->
+    <xacro:if value="${type=='continuous'}">
+        <joint name="${suffix}_joint" type="continuous">
+          <parent link="${parent}"/>
+          <child link="${suffix}"/>
+          <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
+          <limit effort="0" velocity="100"/>
+          <axis xyz="0 1 0"/>
+          <dynamics damping="0.00001"/>
+        </joint>
+   </xacro:if>
 
-        <link name="${suffix}">
-            <!-- visual config -->
-            <visual>
-                <origin xyz="0 0 ${height/2}" rpy="0 0 0"/>
-                <material name="${color}"/>
-                <geometry>
-                    <box size="${width} ${length} ${height}"/>
-                </geometry>
-            </visual>
-            <!-- Gazebo collision config -->
-            <collision>
-                <origin xyz="0 0 ${height/2}" rpy="0 0 0"/>
-                <geometry>
-                    <box size="${width} ${length} ${height}"/>
-                </geometry>            
-            </collision>
-            <!-- inertial config -->
-            <inertial>
-                <origin xyz="${comx} ${comy} ${comz}" rpy="0 0 0"/>
-                <mass value="${mass}"/>
-                <inertia
-                    ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
-                    iyy="${iyy}" iyz="${iyz}"
-                    izz="${izz}"/>
-            </inertial>
-        </link>
+    <link name="${suffix}">
+      <!-- visual config -->
+      <visual>
+        <origin xyz="0 0 ${height/2}" rpy="0 0 0"/>
+        <material name="${color}"/>
+          <geometry>
+            <box size="${width} ${length} ${height}"/>
+          </geometry>
+      </visual>
+      <!-- Gazebo collision config -->
+      <collision>
+        <origin xyz="0 0 ${height/2}" rpy="0 0 0"/>
+          <geometry>
+            <box size="${width} ${length} ${height}"/>
+          </geometry>            
+      </collision>
+      <!-- inertial config -->
+      <inertial>
+        <origin xyz="${comx} ${comy} ${comz}" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia
+          ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+          iyy="${iyy}" iyz="${iyz}"
+          izz="${izz}"/>
+      </inertial>
+    </link>
 
-        <transmission name="${suffix}_transmission">
-            <type>transmission_interface/SimpleTransmission</type>
-            <joint name="${suffix}_joint">
-                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            </joint>
-            <actuator name="${suffix}_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-            </actuator>
-        </transmission>
-    </xacro:macro>
+    <transmission name="${suffix}_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${suffix}_joint">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${suffix}_motor">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
 </robot>

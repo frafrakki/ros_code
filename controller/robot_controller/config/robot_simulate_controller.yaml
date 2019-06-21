@@ -1,4 +1,13 @@
 IB_robot:
   joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 50  
+    publish_rate: 50
+  # Effort(torque) Controllers ---------------------------------------
+  joint1_controller:
+    type: effort_controllers/JointEffortController
+    joint: 1st_link_joint
+    #pid: {p: 100.0, i: 0.01, d: 10.0}
+  joint2_controller:
+    type: effort_controllers/JointEffortController
+    joint: 2nd_link_joint
+    #pid: {p: 100.0, i: 0.01, d: 10.0}
