@@ -2,11 +2,11 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="link_macro" 
     params="suffix parent type color 
-    width length height x_offset y_offset z_offset 
-    mass comx comy comz
-    ixx ixy ixz 
-    iyy iyz 
-    izz">
+            width length height x_offset y_offset z_offset 
+            mass comx comy comz
+            ixx ixy ixz 
+            iyy iyz 
+            izz">
     <!-- revolute joint(actuated) -->
     <xacro:if value="${type=='revolute'}">
       <joint name="${suffix}_joint" type="revolute">
