@@ -14,8 +14,8 @@
         <child link="${suffix}"/>
         <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
         <limit upper="${PI/2}" lower="${-PI/2}" effort="100" velocity="100"/>
-          <axis xyz="0 1 0"/>
-          <dynamics damping="0.1"/>
+        <axis xyz="0 1 0"/>
+        <dynamics damping="0.1"/>
       </joint>
     </xacro:if>
     <!-- continuous joint(passive) -->
