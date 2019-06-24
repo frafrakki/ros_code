@@ -2,25 +2,25 @@
 <robot>
   <!-- ros_control plugin -->
   <gazebo>
-      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-          <robotNamespace>/IB_robot</robotNamespace>
-          <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-      </plugin>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/IB_robot</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
   </gazebo>
   <!-- base link -->
   <gazebo reference="base_link">
-      <material>Gazebo/White</material>
+    <material>Gazebo/White</material>
   </gazebo>
   <!-- Link1 -->
   <gazebo reference="1st_link">
-      <material>Gazebo/Orange</material>
+    <material>Gazebo/Orange</material>
   </gazebo>
   <!-- Link2 -->
   <gazebo reference="2nd_link">
-      <material>Gazebo/Green</material>
+    <material>Gazebo/Green</material>
   </gazebo>
   <gazebo reference="1st_link_joint">
-      <provideFeedback>true</provideFeedback>
+    <provideFeedback>true</provideFeedback>
   </gazebo>
 
 </robot>

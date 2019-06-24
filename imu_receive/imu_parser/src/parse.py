@@ -20,7 +20,7 @@ def callback_euler(data):
     roll = data.roll
     pitch = data.pitch
     yaw = data.yaw
-    print("roll:%7.2f | pitch:%7.2f | yaw:%7.2f" % (roll, pitch, yaw))
+    sys.stdout.write("\rroll:%7.2f | pitch:%7.2f | yaw:%7.2f" % (roll, pitch, yaw))
     sys.stdout.flush()
 
 def imu_parser():

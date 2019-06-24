@@ -9,8 +9,8 @@ project(robot_controller)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
-  ros_control
-  ros_controller
+  #ros_control
+  #ros_controller
   roscpp
   rospy
   sensor_msgs
