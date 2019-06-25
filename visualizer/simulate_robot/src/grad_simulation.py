@@ -35,7 +35,7 @@ def callback_joint_states(data):
   q = data.position
   qdot = data.velocity
 
-  sys.stdout.write("\rq1 %7.2f|q2 %7.2f|q1dot %7.2f|q2dot %7.2f" % (q[0],q[1],qdot[0],qdot[1]))
+  sys.stdout.write("\rq1 %7.2f rad|q2 %7.2f rad|q1dot %7.2f rad|q2dot %7.2f rad" % (q[0],q[1],qdot[0],qdot[1]))
   sys.stdout.flush()
 
 def calculate_torque(angle, a_vel):
