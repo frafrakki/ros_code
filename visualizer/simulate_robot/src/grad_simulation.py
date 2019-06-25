@@ -66,7 +66,7 @@ def main():
   rospy.init_node('graduation_simulator_signal', anonymous=True)
 
   pub = rospy.Publisher('IB_robot/joint2_controller/command', Float64, queue_size=5)
-  rate = rospy.Rate(100)
+  rate = rospy.Rate(10)
 
   while not rospy.is_shutdown():
     rospy.Subscriber("IB_robot/joint_states", JointState, callback_joint_states)
