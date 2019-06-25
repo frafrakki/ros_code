@@ -11,12 +11,14 @@ import sys
 
 angle1 = 0.0
 angle2 = 0.0
+rad2deg = 180./np.pi
 
 def callback_joint_states(data):
   angle1 = data.position[0]
   angle2 = data.position[1]
 
-  sys.stdout.write("\r1st joint %7.2f |2nd joint %7.2f" % (angle1,angle2))
+  #sys.stdout.write("\r1st joint %7.2f rad|2nd joint %7.2f rad" % (angle1,angle2))
+  sys.stdout.write("\r1st joint %7.2f deg|2nd joint %7.2f deg" % (angle1*rad2deg,angle2*rad2deg))
   sys.stdout.flush()
 
 def main():

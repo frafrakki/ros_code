@@ -16,4 +16,6 @@
     <remap from="/joint_states" to="/IB_robot/joint_states" />
   </node>
 
+  <!--node name="graduation_simulation_signal" pkg="simulate_robot" type="grad_simulation.py"/-->
+
 </launch>
