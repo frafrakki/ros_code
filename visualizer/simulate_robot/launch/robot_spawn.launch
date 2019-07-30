@@ -6,6 +6,10 @@
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
+
+  <!-- Initial pose -->
+  <arg name="Roll" value="-0.1"/>
+
   <!-- load world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find rrbot_gazebo)/worlds/rrbot.world"/>
@@ -15,12 +19,15 @@
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="headless" value="$(arg headless)"/>
   </include>
+
   <!-- load URDF -->
   <param name="robot_description" 
     command="$(find xacro)/xacro --inorder '$(find simulate_robot)/urdf/acrobat_robot_IB.xacro'"/>
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false"
-    output="screen" args="-urdf -model IB_robot -param robot_description"/>
+    output="screen" args="-urdf -param robot_description -model IB_robot
+                          -J 1st_joint 3.1"/>
+
   <!-- load controller -->
-  <include file="$(find simulate_robot)/launch/load_controller.launch"/>
+  <!--include file="$(find simulate_robot)/launch/load_controller.launch"/-->
 
 </launch>
