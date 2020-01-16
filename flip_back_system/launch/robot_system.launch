@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+    <!-- launch logger & controller -->
+    <node name="data_logger" pkg="flip_back_system" type="motion_logger.py" output="screen" />
+    <node name="motion_publisher" pkg="flip_back_system" type="flip_motion_controller.py" output="screen" />
+
+    <!-- connect with micon(s) -->
+    <node name="OpenCR" pkg="rosserial_python" type="serial_node.py" output="screen">
+        <param name="port" value="/dev/ttyACM0" />
+        <param name="baud" value="2000000" />
+    </node>
+    <node name="F767ZI" pkg="rosserial_python" type="serial_node.py" output="screen">
+        <param name="port" value="/dev/ttyACM1" />
+        <param name="baud" value="57600" />
+    </node>
+
+    <!-- connect with IMU -->
+    <include file="$(find xsens_driver)/launch/xsens.launch">
+    </include>
+</launch>

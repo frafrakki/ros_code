@@ -35,7 +35,7 @@ def callback_joint_states(data):
   q = data.position
   qdot = data.velocity
 
-  sys.stdout.write("\rq1 %7.2f rad|q2 %7.2f rad|q1dot %7.2f rad|q2dot %7.2f rad" % (q[0],q[1],qdot[0],qdot[1]))
+  sys.stdout.write("\rq1 %7.2f rad|q2 %7.2f rad|q1dot %7.2f rad/s|q2dot %7.2f rad/s" % (q[0],q[1],qdot[0],qdot[1]))
   sys.stdout.flush()
 
 def calculate_torque(angle, a_vel):
@@ -44,11 +44,11 @@ def calculate_torque(angle, a_vel):
 
   t2 = d2**2
   t3 = m2*t2
-  t5 = np.cos(q[1])
+  t5 = np.cos(angle[1])
   t9 = d2*l1*m2*t5
   t4 = I2+t3+t9
-  t6 = np.cos(q[0])
-  t7 = q[0]+q[1]
+  t6 = np.cos(angle[0])
+  t7 = angle[0]+angle[1]
   t8 = np.cos(t7)
   t10 = d1**2
   t11 = m1*t10
@@ -57,8 +57,8 @@ def calculate_torque(angle, a_vel):
   t14 = d2*l1*m2*t5*2.0
   t15 = I1+I2+t3+t11+t13+t14
   t16 = 1.0/t15
-  t17 = np.sin(q[1])
-  Tc = -(kd*a_vel[1]+kp*(q[1]-q2d))*(I2+t3-t4**2*t16)-g*t4*t16*(d1*m1*t6+d2*m2*t8+l1*m2*t6)+d2*g*m2*t8+d2*l1*m2*t17*a_vel[0]**2+d2*l1*m2*t4*t16*t17*a_vel[1]*(a_vel[0]*2.0+a_vel[1])
+  t17 = np.sin(angle[1])
+  Tc = -(kd*a_vel[1]+kp*(angle[1]-q2d))*(I2+t3-t4**2*t16)-g*t4*t16*(d1*m1*t6+d2*m2*t8+l1*m2*t6)+d2*g*m2*t8+d2*l1*m2*t17*a_vel[0]**2+d2*l1*m2*t4*t16*t17*a_vel[1]*(a_vel[0]*2.0+a_vel[1])
   
   return Tc
 
