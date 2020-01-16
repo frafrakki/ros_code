@@ -50,7 +50,9 @@ g = 9.81
 kd = 200
 kp = 2500
 
-alpha = np.pi/4
+alpha = np.pi/6
+
+position_offset = np.array([140,4081])
 
 def control_signal_definition(th1,th2,th2d,thdot1,thdot2):
 
@@ -76,8 +78,8 @@ def control_signal_definition(th1,th2,th2d,thdot1,thdot2):
 
 def dynamixel_position_callback(data):
     global present_dynamixel_position
-    pos1 = data.data[0]
-    pos2 = data.data[0] - 4081
+    pos1 = data.data[0] - position_offset[0]
+    pos2 = data.data[0] - position_offset[1]
     # if (pos1 > 32768):
     #     pos1 = ~pos1
     #     pos1 = pos1 + 1
@@ -114,7 +116,7 @@ def main():
     sleep_rate = 100 # 100Hz
     rate = rospy.Rate(sleep_rate) 
 
-    dynamixel_goal = np.array([145,0])
+    dynamixel_goal = np.array([35,0])
     publish_target_position_array = Int32MultiArray(data = dynamixel_goal)
 
     previous_robot_position = 0.
@@ -133,7 +135,7 @@ def main():
         
         publish_target_current = int( (control_signal_definition(present_robot_position,-1*present_dynamixel_position[1],desired_position,robot_velocity,-1*present_dynamixel_velocity[1])/torque_constant)*10/(current_scaling_factor) )
 
-        #pub1.publish(publish_target_position_array)
+        pub1.publish(publish_target_position_array)
         pub2.publish(publish_target_current)
 
         previous_robot_position = present_robot_position

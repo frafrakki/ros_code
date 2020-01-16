@@ -48,24 +48,24 @@ def callback_euler(data):
 def callback_dynamixel_position(data):
     global dynamixel_position_temp
 
-    dynamixel_position_temp[1] = (data.data[0]-position_offset[0])*position_scaling_factor
-    dynamixel_position_temp[2] = (data.data[1]-position_offset[1])*position_scaling_factor
+    dynamixel_position_temp[1] = -1*(data.data[0]-position_offset[0])*position_scaling_factor
+    dynamixel_position_temp[2] = -1*(data.data[1]-position_offset[1])*position_scaling_factor
 
     #rospy.loginfo("DYNA 1,2: %f,%f", dynamixel_position_temp[1],dynamixel_position_temp[2])
 
 def callback_dynamixel_velocity(data):
     global dynamixel_velocity_temp
 
-    dynamixel_velocity_temp[1] = data.data[0]*velocity_scaling_factor
-    dynamixel_velocity_temp[2] = data.data[1]*velocity_scaling_factor
+    dynamixel_velocity_temp[1] = -1*data.data[0]*velocity_scaling_factor
+    dynamixel_velocity_temp[2] = -1*data.data[1]*velocity_scaling_factor
 
     #rospy.loginfo("DYNA 1,2: %f,%f", dynamixel_velocity_temp[1],dynamixel_velocity_temp[2])
 
 def callback_dynamixel_current(data):
     global dynamixel_current_temp
 
-    dynamixel_current_temp[1] = data.data[0]*current_scaling_factor
-    dynamixel_current_temp[2] = data.data[1]*current_scaling_factor
+    dynamixel_current_temp[1] = -1*data.data[0]*current_scaling_factor
+    dynamixel_current_temp[2] = -1*data.data[1]*current_scaling_factor
 
     #rospy.loginfo("DYNA 1,2: %f,%f", dynamixel_current_temp[1],dynamixel_current_temp[2])
 

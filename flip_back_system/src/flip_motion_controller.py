@@ -19,7 +19,7 @@ import numpy as np
 import sys
 
 def main():
-    offset = np.array([138 -20])
+    offset = np.array([38,-20])
 
     rospy.init_node('motion_controller',anonymous=True)
 
