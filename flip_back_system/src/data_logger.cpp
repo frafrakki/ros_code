@@ -14,8 +14,10 @@
 #include <std_msgs/MultiArrayLayout.h>
 #include <xsens_msgs/orientationEstimate.h>
 // definition
-#define SIM_TIME    30
-#define LOOP_RATE   100
+#define SIM_TIME            30
+#define LOOP_RATE           100
+#define SHOULDER_OFFSET     38
+#define WAIST_OFFSET        -20
 // prototype of callback function(s)
 void dxl_Position_callback(const std_msgs::Int32MultiArray &msg);
 void dxl_Velocity_callback(const std_msgs::Int32MultiArray &msg);
@@ -30,6 +32,11 @@ float dxl_current_data[2];
 float IMU_euler_data[3];
 float encoder_position_data;
 int program_state = 0;
+// dynamixel variable(s)
+float gear_ratio = 18/40;
+float position_scaling_factor = 360/4096;
+float velocity_scaling_factor = 0.299;
+float current_scaling_factor =  2.69;
 
 int main(int argc, char **argv){
     // setup as ROS node
@@ -91,22 +98,22 @@ int main(int argc, char **argv){
 
 // private functions
 void dxl_Position_callback(const std_msgs::Int32MultiArray &msg){
-    dxl_position_data[0] = msg.data[0];
-    dxl_position_data[1] = msg.data[1];
+    dxl_position_data[0] = (msg.data[0] - SHOULDER_OFFSET)* position_scaling_factor / gear_ratio;
+    dxl_position_data[1] = (msg.data[1] - WAIST_OFFSET)* position_scaling_factor;
 
     // ROS_INFO("DXL POS 1,2 :%d, %d",msg.data[0],msg.data[1]);
 }
 
 void dxl_Velocity_callback(const std_msgs::Int32MultiArray &msg){
-    dxl_velocity_data[0] = msg.data[0];
-    dxl_velocity_data[1] = msg.data[1];
+    dxl_velocity_data[0] = msg.data[0] * velocity_scaling_factor;
+    dxl_velocity_data[1] = msg.data[1] * velocity_scaling_factor;
 
     // ROS_INFO("DXL VEL 1,2 :%d, %d",msg.data[0],msg.data[1]);
 }
 
 void dxl_Current_callback(const std_msgs::Int32MultiArray &msg){
-    dxl_current_data[0] = msg.data[0];
-    dxl_current_data[1] = msg.data[1];
+    dxl_current_data[0] = msg.data[0] * current_scaling_factor;
+    dxl_current_data[1] = msg.data[1] * current_scaling_factor;
 
     // ROS_INFO("DXL CRNT 1,2 :%d, %d",msg.data[0],msg.data[1]);
 }
