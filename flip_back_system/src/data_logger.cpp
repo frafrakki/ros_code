@@ -80,6 +80,7 @@ int main(int argc, char **argv){
                     << IMU_euler_data[0] <<","
                     << IMU_euler_data[1] <<","
                     << IMU_euler_data[2] << std::endl;
+        data_count ++;
         rate.sleep();
     }
     write_data.close();
@@ -90,29 +91,36 @@ int main(int argc, char **argv){
 void dxl_Position_callback(const std_msgs::Int32MultiArray &msg){
     dxl_position_data[0] = msg.data[0];
     dxl_position_data[1] = msg.data[1];
-    dxl_position_data[2] = msg.data[2]; 
+
+    ROS_INFO("DXL POS 1,2 :%f, %f",msg.data[0],msg.data[1]);
 }
 
 void dxl_Velocity_callback(const std_msgs::Int32MultiArray &msg){
     dxl_velocity_data[0] = msg.data[0];
     dxl_velocity_data[1] = msg.data[1];
-    dxl_velocity_data[2] = msg.data[2];
+
+    ROS_INFO("DXL VEL 1,2 :%f, %f",msg.data[0],msg.data[1]);
 }
 
 void dxl_Current_callback(const std_msgs::Int32MultiArray &msg){
     dxl_current_data[0] = msg.data[0];
     dxl_current_data[1] = msg.data[1];
-    dxl_current_data[2] = msg.data[2];
+
+    ROS_INFO("DXL CRNT 1,2 :%f, %f",msg.data[0],msg.data[1]);
 }
 
 void IMU_Euler_callback(const xsens_msgs::orientationEstimate &msg){
     IMU_euler_data[0] = msg.roll;
     IMU_euler_data[1] = msg.pitch;
     IMU_euler_data[2] = msg.yaw;
+
+    ROS_INFO("IMU ELR R,P,Y :%f, %f, %f",msg.roll,msg.pitch,msg.yaw);
 }
 
 void Encoder_Angle_callback(const std_msgs::Float64 &msg){
     encoder_position_data = msg.data;
+
+    ROS_INFO("ENC POS :%f",msg.data);
 }
 
 void Program_State_callback(const std_msgs::Int32 &msg){
