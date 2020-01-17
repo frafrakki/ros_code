@@ -52,7 +52,7 @@ kp = 2500
 
 alpha = np.pi/6
 
-position_offset = np.array([140,4081])
+position_offset = np.array([37,4081])
 
 def control_signal_definition(th1,th2,th2d,thdot1,thdot2):
 
