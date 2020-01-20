@@ -16,7 +16,7 @@
 // definition
 #define SIM_TIME            30
 #define LOOP_RATE           100
-#define SHOULDER_OFFSET     38
+#define SHOULDER_OFFSET     28
 #define WAIST_OFFSET        -20
 // prototype of callback function(s)
 void dxl_Position_callback(const std_msgs::Int32MultiArray &msg);
@@ -33,8 +33,8 @@ float IMU_euler_data[3];
 float encoder_position_data;
 int program_state = 0;
 // dynamixel variable(s)
-float gear_ratio = 18/40;
-float position_scaling_factor = 360/4096;
+float gear_ratio = 18.0/40.0;
+float position_scaling_factor = 360.0/4095.0;
 float velocity_scaling_factor = 0.299;
 float current_scaling_factor =  2.69;
 
@@ -77,17 +77,17 @@ int main(int argc, char **argv){
     while(ros::ok()){
         ros::spinOnce(); // recieve data from ROS queue
         if(program_state == 1){
-            write_data  << data_count <<","
-                        << encoder_position_data <<","
-                        << dxl_position_data[0] <<","
-                        << dxl_position_data[1] <<","
-                        << dxl_velocity_data[0] <<","
-                        << dxl_velocity_data[1] <<","
-                        << dxl_current_data[0] <<","
-                        << dxl_current_data[1] <<","
-                        << IMU_euler_data[0] <<","
-                        << IMU_euler_data[1] <<","
-                        << IMU_euler_data[2] << std::endl;
+            write_data  << data_count            << ","
+                        << encoder_position_data << ","
+                        << dxl_position_data[0]  << ","
+                        << dxl_position_data[1]  << ","
+                        << dxl_velocity_data[0]  << ","
+                        << dxl_velocity_data[1]  << ","
+                        << dxl_current_data[0]   << ","
+                        << dxl_current_data[1]   << ","
+                        << IMU_euler_data[0]     << ","
+                        << IMU_euler_data[1]     << ","
+                        << IMU_euler_data[2]     << std::endl;
             data_count ++;
         }
         rate.sleep();
@@ -98,10 +98,11 @@ int main(int argc, char **argv){
 
 // private functions
 void dxl_Position_callback(const std_msgs::Int32MultiArray &msg){
-    dxl_position_data[0] = (msg.data[0] - SHOULDER_OFFSET)* position_scaling_factor / gear_ratio;
+    dxl_position_data[0] = (msg.data[0] - SHOULDER_OFFSET)* position_scaling_factor/ gear_ratio;
     dxl_position_data[1] = (msg.data[1] - WAIST_OFFSET)* position_scaling_factor;
 
     // ROS_INFO("DXL POS 1,2 :%d, %d",msg.data[0],msg.data[1]);
+    ROS_INFO("DXL POS 1,2 :%f, %f",dxl_position_data[0],dxl_position_data[1]);
 }
 
 void dxl_Velocity_callback(const std_msgs::Int32MultiArray &msg){
@@ -129,7 +130,7 @@ void IMU_Euler_callback(const xsens_msgs::orientationEstimate &msg){
 void Encoder_Angle_callback(const std_msgs::Float64 &msg){
     encoder_position_data = msg.data;
 
-    ROS_INFO("ENC POS :%f",msg.data);
+    // ROS_INFO("ENC POS :%f",msg.data);
 }
 
 void Program_State_callback(const std_msgs::Int32 &msg){
