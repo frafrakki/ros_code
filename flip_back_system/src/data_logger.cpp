@@ -16,8 +16,8 @@
 // definition
 #define SIM_TIME            30
 #define LOOP_RATE           100
-#define SHOULDER_OFFSET     28
-#define WAIST_OFFSET        -20
+#define SHOULDER_OFFSET     150
+#define WAIST_OFFSET        -21
 // prototype of callback function(s)
 void dxl_Position_callback(const std_msgs::Int32MultiArray &msg);
 void dxl_Velocity_callback(const std_msgs::Int32MultiArray &msg);
@@ -102,7 +102,7 @@ void dxl_Position_callback(const std_msgs::Int32MultiArray &msg){
     dxl_position_data[1] = (msg.data[1] - WAIST_OFFSET)* position_scaling_factor;
 
     // ROS_INFO("DXL POS 1,2 :%d, %d",msg.data[0],msg.data[1]);
-    ROS_INFO("DXL POS 1,2 :%f, %f",dxl_position_data[0],dxl_position_data[1]);
+    // ROS_INFO("DXL POS 1,2 :%f, %f",dxl_position_data[0],dxl_position_data[1]);
 }
 
 void dxl_Velocity_callback(const std_msgs::Int32MultiArray &msg){

@@ -9,6 +9,9 @@ from std_msgs.msg import Int32MultiArray
 from std_msgs.msg import MultiArrayDimension
 from std_msgs.msg import MultiArrayLayout
 
+# encoder message
+from std_msgs.msg import Float64
+
 # IMU message
 from xsens_msgs.msg import orientationEstimate
 
@@ -18,8 +21,17 @@ from std_msgs.msg import Int32,String
 import numpy as np
 import sys
 
+encoder_angle = 0.0
+start_angle = -179.5
+
+def encoder_callback(data):
+    global encoder_angle
+    encoder_angle = data.data
+
+    rospy.loginfo("ENC :%f",encoder_angle)
+
 def main():
-    offset = np.array([38,-20])
+    offset = np.array([41,-21])
 
     rospy.init_node('motion_controller',anonymous=True)
 
@@ -35,11 +47,12 @@ def main():
 
     while not rospy.is_shutdown():
 
-        print("RUNNING")
+        # print("RUNNING")
 
         pub0.publish(state)
+        rospy.Subscriber("Angle", Float64, encoder_callback)
 
-        if(state == 1):
+        if(encoder_angle >= start_angle):
             pub1.publish(publish_array)
 
 if __name__ == "__main__":
