@@ -33,7 +33,7 @@ int main(int argc, char **argv){
     ros::Publisher pub0 = nh.advertise<std_msgs::Int32>("program_state",1);
     ros::Publisher pub1 = nh.advertise<std_msgs::Int32MultiArray>("dxl_target/Target_position",1);
     // setup Subscriber
-    ros::Subscriber encoder_data  = nh.subscribe("Angle", 10, encoder_callback);
+    ros::Subscriber encoder_data  = nh.subscribe("Angle", 1, encoder_callback);
     //setup loop rate
     ros::Rate rate=LOOP_RATE;
 

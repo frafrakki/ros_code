@@ -70,9 +70,9 @@ int main(int argc, char **argv){
     ros::Publisher pub2 = nh.advertise<std_msgs::Int32>("dxl_target/Target_current",1);
 
     // setup Subscriber
-    ros::Subscriber encoder_data = nh.subscribe("Angle",10,encoder_angle_callback);
-    ros::Subscriber dynamixel_position = nh.subscribe("dxl_data/present_position_array",10,dynamixel_position_callback);
-    ros::Subscriber dynamixel_velocity = nh.subscribe("dxl_data/present_velocity_array",10,dynamixel_velocity_callback);
+    ros::Subscriber encoder_data = nh.subscribe("Angle",1,encoder_angle_callback);
+    ros::Subscriber dynamixel_position = nh.subscribe("dxl_data/present_position_array",1,dynamixel_position_callback);
+    ros::Subscriber dynamixel_velocity = nh.subscribe("dxl_data/present_velocity_array",1,dynamixel_velocity_callback);
 
     // ROS loop rate
     ros::Rate rate = LOOP_RATE;
