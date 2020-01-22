@@ -17,7 +17,7 @@
 // definition
 #define SIM_TIME            30
 #define LOOP_RATE           100
-#define SHOULDER_OFFSET     150
+#define SHOULDER_OFFSET     -63
 #define WAIST_OFFSET        4081
 
 // prototype of private function(s)
@@ -109,7 +109,7 @@ int main(int argc, char **argv){
         robot_velocity = (previous_robot_position - encoder_position_data)*LOOP_RATE;
 
         desired_position = alpha*atan(robot_velocity);
-        dynamixel_target_current.data = int( control_signal_definition(encoder_position_data,-1*dxl_position_data[1],desired_position,robot_velocity,-1*dxl_velocity_data[1])/torque_constant );
+        dynamixel_target_current.data = int( (control_signal_definition(encoder_position_data,-1*dxl_position_data[1],desired_position,robot_velocity,-1*dxl_velocity_data[1])/torque_constant)*10/(current_scaling_factor) );
         pub2.publish(dynamixel_target_current);
 
         previous_robot_position = encoder_position_data;

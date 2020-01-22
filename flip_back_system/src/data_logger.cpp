@@ -16,7 +16,7 @@
 // definition
 #define SIM_TIME            30
 #define LOOP_RATE           100
-#define SHOULDER_OFFSET     150
+#define SHOULDER_OFFSET     -63
 #define WAIST_OFFSET        -21
 // prototype of callback function(s)
 void dxl_Position_callback(const std_msgs::Int32MultiArray &msg);
