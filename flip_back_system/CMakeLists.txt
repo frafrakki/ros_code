@@ -136,6 +136,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
  add_executable(data_logger src/data_logger.cpp)
  add_executable(flip_controller src/flip_controller.cpp)
+ add_executable(swing_controller src/swing_controller.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -152,6 +153,9 @@ include_directories(
    ${catkin_LIBRARIES}
  )
   target_link_libraries(flip_controller
+   ${catkin_LIBRARIES}
+ )
+  target_link_libraries(swing_controller
    ${catkin_LIBRARIES}
  )
 

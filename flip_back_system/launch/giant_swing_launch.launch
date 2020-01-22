@@ -2,8 +2,8 @@
 
 <launch>
     <!-- launch logger & controller -->
-    <node name="data_logger" pkg="flip_back_system" type="motion_logger.py" output="screen" />
-    <node name="motion_publisher" pkg="flip_back_system" type="giant_swing_controller.py" output="screen" />
+    <node name="data_logger" pkg="flip_back_system" type="data_logger" output="screen" />
+    <node name="motion_publisher" pkg="flip_back_system" type="swing_controller" output="screen" />
 
     <!-- connect with micon(s) -->
     <node name="OpenCR" pkg="rosserial_python" type="serial_node.py" output="screen">

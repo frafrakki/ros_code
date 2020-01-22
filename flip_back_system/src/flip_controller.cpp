@@ -30,8 +30,8 @@ int main(int argc, char **argv){
     ros::init(argc,argv, "flip_controller");
     ros::NodeHandle nh;
     // setup Publisher
-    ros::Publisher pub0 = nh.advertise<std_msgs::Int32>("program_state",10);
-    ros::Publisher pub1 = nh.advertise<std_msgs::Int32MultiArray>("dxl_target/Target_position_array",10);
+    ros::Publisher pub0 = nh.advertise<std_msgs::Int32>("program_state",1);
+    ros::Publisher pub1 = nh.advertise<std_msgs::Int32MultiArray>("dxl_target/Target_position",1);
     // setup Subscriber
     ros::Subscriber encoder_data  = nh.subscribe("Angle", 10, encoder_callback);
     //setup loop rate
@@ -40,7 +40,7 @@ int main(int argc, char **argv){
     // ROS messages
     std_msgs::Int32 program_state;
     std_msgs::Int32MultiArray dynamixel_goal;
-    // massage datum
+    // message datum
     program_state.data = 0;
 
     dynamixel_goal.data.resize(2);
@@ -58,6 +58,7 @@ int main(int argc, char **argv){
 
         if(encoder_angle >= START_ANGLE){
             pub1.publish(dynamixel_goal);
+            ROS_INFO("TGT 1,2 :%d,%d",dynamixel_goal.data[0],dynamixel_goal.data[1]);
         }
 
         rate.sleep();
@@ -66,5 +67,5 @@ int main(int argc, char **argv){
 
 void encoder_callback(const std_msgs::Float64 data){
     encoder_angle = data.data;
-    ROS_INFO("ENC :%f",encoder_angle);
+    // ROS_INFO("ENC :%f",encoder_angle);
 }
