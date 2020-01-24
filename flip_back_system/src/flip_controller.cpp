@@ -49,7 +49,10 @@ int main(int argc, char **argv){
 
     ROS_INFO("Waiting for input");
 
-    std::cin >> program_state.data;
+    do{
+        std::cin >> program_state.data;
+    }
+    while(program_state.data != 1);
 
     while(ros::ok()){
         ros::spinOnce();
