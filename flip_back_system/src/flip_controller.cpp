@@ -13,12 +13,9 @@
 #include <std_msgs/MultiArrayDimension.h>
 #include <std_msgs/MultiArrayLayout.h>
 #include <xsens_msgs/orientationEstimate.h>
-// definition
-#define SIM_TIME            30
-#define LOOP_RATE           100
-#define SHOULDER_OFFSET     140
-#define WAIST_OFFSET        -21
-#define START_ANGLE         -179.5
+
+// private include header(s)
+#include "global_definitions.h"
 // prototype of callback function(s)
 void encoder_callback(const std_msgs::Float64 data);
 
@@ -45,10 +42,10 @@ int main(int argc, char **argv){
     // message datum
     program_state.data = 0;
 
-    int goal_position[2] = {847,284};
-    // int goal_position[2] = {600,790};
+    int goal_position[2] = {SHOULDER_FLIP_GOAL,WAIST_FLIP_GOAL};
+
     dynamixel_goal.data[0] = -goal_position[0]-SHOULDER_OFFSET;
-    dynamixel_goal.data[1] = -goal_position[1]-WAIST_OFFSET;
+    dynamixel_goal.data[1] = -goal_position[1]-WAIST_OFFSET_FLIP;
 
     ROS_INFO("Waiting for input");
 

@@ -14,12 +14,8 @@
 #include <std_msgs/MultiArrayDimension.h>
 #include <std_msgs/MultiArrayLayout.h>
 #include <xsens_msgs/orientationEstimate.h>
-// definition
-#define SIM_TIME            30
-#define LOOP_RATE           100
-#define SHOULDER_OFFSET     148
-#define WAIST_OFFSET        4081
-
+// private include header(s)
+#include "global_definitions.h"
 // prototype of private function(s)
 double control_signal_definition(float th1,float th2,float th2d,float thdot1,float thdot2);
 
@@ -118,8 +114,8 @@ int main(int argc, char **argv){
 }
 
 void dynamixel_position_callback(const std_msgs::Int32MultiArray &msg){
-    dxl_position_data[0] = msg.data[0];
-    dxl_position_data[1] = msg.data[1];
+    dxl_position_data[0] = msg.data[0] - SHOULDER_OFFSET;
+    dxl_position_data[1] = msg.data[1] - WAIST_OFFSET_SWING;
 }
 
 void dynamixel_velocity_callback(const std_msgs::Int32MultiArray &msg){
