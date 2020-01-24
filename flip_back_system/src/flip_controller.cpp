@@ -16,7 +16,7 @@
 // definition
 #define SIM_TIME            30
 #define LOOP_RATE           100
-#define SHOULDER_OFFSET     -63
+#define SHOULDER_OFFSET     140
 #define WAIST_OFFSET        -21
 #define START_ANGLE         -179.5
 // prototype of callback function(s)
@@ -45,7 +45,7 @@ int main(int argc, char **argv){
     // message datum
     program_state.data = 0;
 
-    int goal_position[2] = {808,790};
+    int goal_position[2] = {847,284};
     // int goal_position[2] = {600,790};
     dynamixel_goal.data[0] = -goal_position[0]-SHOULDER_OFFSET;
     dynamixel_goal.data[1] = -goal_position[1]-WAIST_OFFSET;

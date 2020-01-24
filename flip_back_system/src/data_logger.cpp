@@ -16,7 +16,7 @@
 // definition
 #define SIM_TIME            30
 #define LOOP_RATE           100
-#define SHOULDER_OFFSET     -63
+#define SHOULDER_OFFSET     140
 #define WAIST_OFFSET        -21
 // prototype of callback function(s)
 void dxl_Position_callback(const std_msgs::Int32MultiArray &msg);
@@ -59,20 +59,26 @@ int main(int argc, char **argv){
     std::ofstream write_data;
     // open file(s)
     write_data.open("/home/irl/ROS_data/ROBOT_ACTION_DATA.csv", std::ios::trunc);
+    // record offset
+    write_data  << "Shoulder offset value :" <<","
+                << SHOULDER_OFFSET           <<","
+                << "Waist offset value :"    <<","
+                << WAIST_OFFSET              << std::endl;
     // set label
-    write_data  << "DATA" <<","
-                << "encoder" <<","
-                << "dxl_pos_1" <<","
-                << "dxl_pos_2" <<","
-                << "dxl_vel_1" <<","
-                << "dxl_vel_2" <<","
-                << "dxl_current_1" <<","
-                << "dxl_current_2" <<","
-                << "IMU_roll" <<","
-                << "IMU_pitch" <<","
-                << "IMU_yaw" << std::endl;
+    write_data  << "DATA"            <<","
+                << "encoder"         <<","
+                << "dxl_pos_1"       <<","
+                << "dxl_pos_2"       <<","
+                << "dxl_vel_1"       <<","
+                << "dxl_vel_2"       <<","
+                << "dxl_current_1"   <<","
+                << "dxl_current_2"   <<","
+                << "IMU_roll"        <<","
+                << "IMU_pitch"       <<","
+                << "IMU_yaw"         << std::endl;
     // set private var(s)
     int data_count = 0;
+    ROS_WARN("SYSTEM START");
     // loop
     while(ros::ok()){
         ros::spinOnce(); // recieve data from ROS queue
@@ -93,28 +99,29 @@ int main(int argc, char **argv){
         rate.sleep();
     }
     write_data.close();
+    ROS_WARN("SYSTEM SHUTDOWN");
 
 }
 
 // private functions
 void dxl_Position_callback(const std_msgs::Int32MultiArray &msg){
-    dxl_position_data[0] = -1*(msg.data[0] - SHOULDER_OFFSET)* position_scaling_factor/ gear_ratio;
-    dxl_position_data[1] = -1*(msg.data[1] - WAIST_OFFSET)* position_scaling_factor;
+    dxl_position_data[0] = (msg.data[0] - SHOULDER_OFFSET)* position_scaling_factor/ gear_ratio;
+    dxl_position_data[1] = (msg.data[1] - WAIST_OFFSET)* position_scaling_factor;
 
     // ROS_INFO("DXL POS 1,2 :%d, %d",msg.data[0],msg.data[1]);
     // ROS_INFO("DXL POS 1,2 :%f, %f",dxl_position_data[0],dxl_position_data[1]);
 }
 
 void dxl_Velocity_callback(const std_msgs::Int32MultiArray &msg){
-    dxl_velocity_data[0] = -1*msg.data[0] * velocity_scaling_factor;
-    dxl_velocity_data[1] = -1*msg.data[1] * velocity_scaling_factor;
+    dxl_velocity_data[0] = msg.data[0] * velocity_scaling_factor;
+    dxl_velocity_data[1] = msg.data[1] * velocity_scaling_factor;
 
     // ROS_INFO("DXL VEL 1,2 :%d, %d",msg.data[0],msg.data[1]);
 }
 
 void dxl_Current_callback(const std_msgs::Int32MultiArray &msg){
-    dxl_current_data[0] = -1*msg.data[0] * current_scaling_factor;
-    dxl_current_data[1] = -1*msg.data[1] * current_scaling_factor;
+    dxl_current_data[0] = msg.data[0] * current_scaling_factor;
+    dxl_current_data[1] = msg.data[1] * current_scaling_factor;
 
     // ROS_INFO("DXL CRNT 1,2 :%d, %d",msg.data[0],msg.data[1]);
 }

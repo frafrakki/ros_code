@@ -17,11 +17,11 @@
 // definition
 #define SIM_TIME            30
 #define LOOP_RATE           100
-#define SHOULDER_OFFSET     -63
+#define SHOULDER_OFFSET     148
 #define WAIST_OFFSET        4081
 
 // prototype of private function(s)
-float control_signal_definition(float th1,float th2,float th2d,float thdot1,float thdot2);
+double control_signal_definition(float th1,float th2,float th2d,float thdot1,float thdot2);
 
 // prototype of ROS callback function(s)
 void dynamixel_position_callback(const std_msgs::Int32MultiArray &msg);
@@ -39,7 +39,6 @@ float torque_constant = 0.79; // Nm/A
 float l1 = 0.363;
 float d1 = 0.240;
 float m1 = 1.234;
-
 float I1 = 0.080042027;
 
 float l2 = 0.273;
@@ -131,8 +130,8 @@ void encoder_angle_callback(const std_msgs::Float64 &msg){
     encoder_position_data = msg.data;
 }
 
-float control_signal_definition(float th1,float th2,float th2d,float thdot1,float thdot2){
-    float t2,t3,t5,t9,t4,t6,t7,t8,t10,t11,t12,t13,t14,t15,t16,t17,Tc;
+double control_signal_definition(float th1,float th2,float th2d,float thdot1,float thdot2){
+    double t2,t3,t5,t9,t4,t6,t7,t8,t10,t11,t12,t13,t14,t15,t16,t17,Tc;
     t2 = std::pow(d2,2);
     t3 = m2*t2;
     t5 = cos(th2);
