@@ -118,7 +118,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
  include
-  ~/catkin_ws/src/flip_back_system/include/flip_back_system
+  
   ${catkin_INCLUDE_DIRS}
 )
 

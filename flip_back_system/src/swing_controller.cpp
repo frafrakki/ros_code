@@ -101,7 +101,7 @@ int main(int argc, char **argv){
     while(ros::ok()){
         // get data from queue
         ros::spinOnce();
-        robot_velocity = (previous_robot_position - encoder_position_data)*LOOP_RATE;
+        robot_velocity = (encoder_position_data - previous_robot_position)*LOOP_RATE;
 
         desired_position = alpha*atan(robot_velocity);
         dynamixel_target_current.data = int( (control_signal_definition(encoder_position_data,-1*dxl_position_data[1],desired_position,robot_velocity,-1*dxl_velocity_data[1])/torque_constant)*10/(current_scaling_factor) );
