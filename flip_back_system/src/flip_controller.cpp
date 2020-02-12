@@ -44,8 +44,8 @@ int main(int argc, char **argv){
 
     int goal_position[2] = {SHOULDER_FLIP_GOAL,WAIST_FLIP_GOAL};
 
-    dynamixel_goal.data[0] = -goal_position[0]-SHOULDER_OFFSET;
-    dynamixel_goal.data[1] = -goal_position[1]-WAIST_OFFSET_FLIP;
+    dynamixel_goal.data[0] = -goal_position[0]+SHOULDER_OFFSET;
+    dynamixel_goal.data[1] = -goal_position[1]+WAIST_OFFSET_FLIP;
 
     ROS_INFO("Waiting for input");
 

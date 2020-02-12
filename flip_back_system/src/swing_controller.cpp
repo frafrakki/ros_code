@@ -18,6 +18,7 @@
 #include "global_definitions.h"
 // prototype of private function(s)
 double control_signal_definition(float th1,float th2,float th2d,float thdot1,float thdot2);
+double t2,t3,t5,t9,t4,t6,t7,t8,t10,t11,t12,t13,t14,t15,t16,t17,Tc;
 
 // prototype of ROS callback function(s)
 void dynamixel_position_callback(const std_msgs::Int32MultiArray &msg);
@@ -109,6 +110,8 @@ int main(int argc, char **argv){
 
         previous_robot_position = encoder_position_data;
 
+        std::cout << "current velocity :" << robot_velocity << std::endl;
+
         rate.sleep();
     } 
 }
@@ -116,19 +119,24 @@ int main(int argc, char **argv){
 void dynamixel_position_callback(const std_msgs::Int32MultiArray &msg){
     dxl_position_data[0] = msg.data[0] - SHOULDER_OFFSET;
     dxl_position_data[1] = msg.data[1] - WAIST_OFFSET_SWING;
+
+    dxl_position_data[0] =(M_PI/180.0)*position_scaling_factor*dxl_position_data[0];
+    dxl_position_data[1] =(M_PI/180.0)*position_scaling_factor*dxl_position_data[1];
 }
 
 void dynamixel_velocity_callback(const std_msgs::Int32MultiArray &msg){
     dxl_velocity_data[1] = msg.data[1];
+
+    dxl_velocity_data[1] = (M_PI/30.0)*velocity_scaling_factor*dxl_velocity_data[1];
 }
 
 void encoder_angle_callback(const std_msgs::Float64 &msg){
-    encoder_position_data = msg.data;
+    encoder_position_data = (M_PI/180.0)*msg.data;
 }
 
 double control_signal_definition(float th1,float th2,float th2d,float thdot1,float thdot2){
-    double t2,t3,t5,t9,t4,t6,t7,t8,t10,t11,t12,t13,t14,t15,t16,t17,Tc;
-    t2 = std::pow(d2,2);
+    
+    t2 = d2*d2;
     t3 = m2*t2;
     t5 = cos(th2);
     t9 = d2*l1*m2*t5;
@@ -136,15 +144,15 @@ double control_signal_definition(float th1,float th2,float th2d,float thdot1,flo
     t6 = cos(th1);
     t7 = th1+th2;
     t8 = cos(t7);
-    t10 = std::pow(d1,2);
+    t10 = d1*d1;
     t11 = m1*t10;
-    t12 = std::pow(l1,2);
+    t12 = l1*l1;
     t13 = m2*t12;
     t14 = d2*l1*m2*t5*2.0;
     t15 = I1+I2+t3+t11+t13+t14;
     t16 = 1.0/t15;
     t17 = sin(th2);
-    Tc = -(kd*thdot2+kp*(th2-th2d))*(I2+t3-std::pow(t4,2)*t16)-g*t4*t16*(d1*m1*t6+d2*m2*t8+l1*m2*t6)+d2*g*m2*t8+d2*l1*m2*t17*std::pow(thdot1,2)+d2*l1*m2*t4*t16*t17*thdot2*(thdot1*2.0+thdot2);
+    Tc = -1*(kd*thdot2+kp*(th2-th2d))*(I2+t3-t4*t4*t16)-g*t4*t16*(d1*m1*t6+d2*m2*t8+l1*m2*t6)+d2*g*m2*t8+d2*l1*m2*t17*thdot1*thdot1+d2*l1*m2*t4*t16*t17*thdot2*(thdot1*2.0+thdot2);
 
     return Tc;
 }
