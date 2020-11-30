@@ -28,7 +28,7 @@ float encoder_angle = 0.0;
 
 int main(int argc, char **argv){
     // setup as ROS node
-    ros::init(argc,argv, "flip_controller");
+    ros::init(argc,argv, "3link_swing");
     ros::NodeHandle nh;
     // setup Publisher
     ros::Publisher pub0 = nh.advertise<std_msgs::Int32>("program_state",1);
@@ -56,7 +56,6 @@ int main(int argc, char **argv){
 
     string line;
     vector<vector<string> > strvec;
-    int read_data;
 
     while (getline(ifs, line)) {
         
@@ -64,9 +63,7 @@ int main(int argc, char **argv){
         
         for (int i=0; i<strvec.size();i++){
             for(int j=0; j<strvec.at(i).size();j++){
-                istringstream iss(strvec.at(i).at(j));
-                iss >> read_data;
-                printf("%5d", read_data);
+                printf("%5d", stoi(strvec.at(i).at(j)));
             }
             printf("\n");
         }
