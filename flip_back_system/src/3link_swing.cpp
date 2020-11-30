@@ -52,7 +52,7 @@ int main(int argc, char **argv){
     dynamixel_goal.data[1] = -goal_position[1]+WAIST_OFFSET_FLIP;
 
     // read CSV data
-    ifstream ifs("data.csv"); //set motion data source
+    ifstream ifs("CSV_NAME"); //set motion data source
 
     string line;
     vector<vector<string> > strvec;
