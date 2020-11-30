@@ -138,6 +138,7 @@ include_directories(
  add_executable(data_logger src/data_logger.cpp)
  add_executable(flip_controller src/flip_controller.cpp)
  add_executable(swing_controller src/swing_controller.cpp)
+ add_executable(3link_swing src/3link_swing.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
