@@ -28,11 +28,11 @@ float encoder_angle = 0.0;
 
 int main(int argc, char **argv){
     // setup as ROS node
-    ros::init(argc,argv, "3link_swing");
+    ros::init(argc,argv, "trilink_swing");
     ros::NodeHandle nh;
     // setup Publisher
     ros::Publisher pub0 = nh.advertise<std_msgs::Int32>("program_state",1);
-    ros::Publisher pub1 = nh.advertise<std_msgs::Int32MultiArray>("dxl_target/Target_position",1);
+    ros::Publisher pub1 = nh.advertise<std_msgs::Int32MultiArray>("dxl_target/Target_current",1);
     // setup Subscriber
     ros::Subscriber encoder_data  = nh.subscribe("Angle", 1, encoder_callback);
     //setup loop rate
@@ -45,14 +45,26 @@ int main(int argc, char **argv){
 
     // message datum
     program_state.data = 0;
-
+    /*
     int goal_position[2] = {SHOULDER_FLIP_GOAL,WAIST_FLIP_GOAL};
 
     dynamixel_goal.data[0] = -goal_position[0]+SHOULDER_OFFSET;
     dynamixel_goal.data[1] = -goal_position[1]+WAIST_OFFSET_FLIP;
+    */
+    //counter
+    int i=0;
+    int j=0;
+
+    //dynamixel variables
+    float gear_ratio = 18.0/40.0;
+    float position_scaling_factor = 360.0/4095.0; // deg/Dynamixel VALUE
+    float velocity_scaling_factor = 0.299; // rpm/Dynamixel VALUE
+    float current_scaling_factor =  2.69; // mA/Dynamixel VALUE
+    float torque_constant_shoulder = 0.79; // Nm/A
+    float torque_constant_hip = 0.79; // Nm/A
 
     // read CSV data
-    ifstream ifs("CSV_NAME"); //set motion data source
+    ifstream ifs(CSV_NAME); //set motion data source
 
     string line;
     vector<vector<string> > strvec;
@@ -61,31 +73,32 @@ int main(int argc, char **argv){
         
         strvec.push_back(split(line, ','));
         
-        for (int i=0; i<strvec.size();i++){
-            for(int j=0; j<strvec.at(i).size();j++){
+        for (i=0; i<strvec.size();i++){
+            for(j=0; j<strvec.at(i).size();j++){
                 printf("%5d", stoi(strvec.at(i).at(j)));
             }
             printf("\n");
         }
         printf("---\n");
+        i=0;
     }
 
     ROS_INFO("Waiting for input");
 
     do{
-        std::cin >> program_state.data;
+        cin >> program_state.data;
     }
     while(program_state.data != 1);
 
-    while(ros::ok()){
+    while(ros::ok() && i<strvec.size()){
         ros::spinOnce();
 
         pub0.publish(program_state);
-
-        if(encoder_angle >= START_ANGLE){
-            pub1.publish(dynamixel_goal);
-            ROS_INFO("TGT 1,2 :%d,%d",dynamixel_goal.data[0],dynamixel_goal.data[1]);
-        }
+        dynamixel_goal.data[0] = (int)(stof(strvec.at(i).at(0))/gear_ratio/torque_constant_shoulder)*1000/current_scaling_factor;
+        dynamixel_goal.data[1] = (int)(stof(strvec.at(i).at(1))/torque_constant_hip)*1000/current_scaling_factor;
+        pub1.publish(dynamixel_goal);
+        ROS_INFO("TGT 1,2 :%d,%d",dynamixel_goal.data[0],dynamixel_goal.data[1]);
+        i++;
 
         rate.sleep();
     }

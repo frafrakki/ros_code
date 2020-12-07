@@ -7,7 +7,7 @@
 #define START_ANGLE         -179.5
 #define SHOULDER_FLIP_GOAL  742
 #define WAIST_FLIP_GOAL     740
-#define CSV_NAME            data.csv
+#define CSV_NAME            "/home/irl/motion_data/torque_M.csv"
 
 /*  動かす前にオフセット入力
     画面下のターミナルで"cm" */
